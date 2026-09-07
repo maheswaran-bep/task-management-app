@@ -70,7 +70,7 @@ EOF
         steps {
             sh '''
                 set -e
-                docker compose config > /tmp/task-management-compose-config.yml
+                docker compose config
                 echo "Docker Compose configuration is valid."
             '''
         }
@@ -115,6 +115,7 @@ EOF
                 set -e
 
                 echo "Checking backend API..."
+
                 curl --fail --silent --show-error \
                     http://localhost:${NGINX_HOST_PORT}/api/health
 
@@ -122,6 +123,7 @@ EOF
                 echo "Backend health check passed."
 
                 echo "Checking frontend..."
+
                 curl --fail --silent --show-error \
                     -I http://localhost:${NGINX_HOST_PORT}
 
@@ -143,6 +145,11 @@ post {
         echo '=============================================='
         echo 'Task Management App deployment FAILED!'
         echo '=============================================='
+
+        sh '''
+            docker compose ps || true
+            docker compose logs --tail=50 || true
+        '''
     }
 
     cleanup {
@@ -157,3 +164,4 @@ post {
 ```
 
 }
+
