@@ -1,7 +1,6 @@
 pipeline {
 agent any
 
-```
 parameters {
     string(
         name: 'NGINX_HOST_PORT',
@@ -48,7 +47,6 @@ stages {
                 set -e
 
                 cat > .env <<EOF
-```
 
 MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 MYSQL_PASSWORD=${MYSQL_PASSWORD}
@@ -60,7 +58,6 @@ ENVIRONMENT=production
 SESSION_LIFETIME_SECONDS=3600
 EOF
 
-```
                 chmod 600 .env
             '''
         }
@@ -161,7 +158,6 @@ post {
         }
     }
 }
-```
 
 }
 
